@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Usuario Creado{% endblock %}
+
+{% block content %}
+<h2>Registro Completado</h2>
+<p>¡Tu cuenta ha sido creada correctamente! Ahora puedes iniciar sesión.</p>
+<a href="{% url 'login' %}" class="btn btn-primary">Iniciar Sesión</a>
+{% endblock %}

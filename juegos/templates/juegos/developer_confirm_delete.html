@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Developer{% endblock %}
+
+{% block content %}
+<h2>Eliminar Developer</h2>
+<p>¿Estás seguro de que quieres eliminar al developer "<strong>{{ developer.nombre }}</strong>"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="{% url 'developer_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

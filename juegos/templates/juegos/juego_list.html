@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Juegos{% endblock %}
+
+{% block content %}
+<h2>Lista de Juegos</h2>
+{% if user.is_staff %}
+<a href="{% url 'juego_add' %}" class="btn btn-success mb-3">Agregar Juego</a>
+{% endif %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Género</th>
+            <th>Lanzamiento</th>
+            <th>Developer</th>
+            <th>Publisher</th>
+            <th>Puntaje Metacritic</th>
+            <th>Puntaje Promedio</th>
+            <th>Puntuar</th>
+            {% if user.is_staff %}
+            <th>Acciones</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for juego in juegos %}
+        <tr>
+            <td>{{ juego.titulo }}</td>
+            <td>{{ juego.genero }}</td>
+            <td>{{ juego.lanzamiento }}</td>
+            <td>{{ juego.developer.nombre }}</td>
+            <td>{{ juego.publisher.nombre }}</td>
+            <td>{{ juego.puntaje_metacritic }}</td>
+            <td>{{ juego.promedio_usuarios|default:"No hay puntuaciones" }}</td>
+            <td>
+                <form method="post" action="{% url 'rank_juego' juego.pk %}">
+                    {% csrf_token %}
+                    <input type="number" name="puntuacion" min="1" max="10" required class="form-control mb-2">
+                    <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+                </form>
+            </td>
+            {% if user.is_staff %}
+            <td>
+                <a href="{% url 'juego_edit' juego.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'juego_delete' juego.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

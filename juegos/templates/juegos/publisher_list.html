@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Publishers{% endblock %}
+
+{% block content %}
+<h2>Lista de Publishers</h2>
+<a href="{% url 'publisher_add' %}" class="btn btn-success mb-3">Agregar Publisher</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>País</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for publisher in publishers %}
+        <tr>
+            <td>{{ publisher.nombre }}</td>
+            <td>{{ publisher.pais }}</td>
+            <td>
+                <a href="{% url 'publisher_edit' publisher.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'publisher_delete' publisher.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Acerca de Nosotros{% endblock %}
+
+{% block content %}
+<div style="text-align: center;">
+    <h1>¡Bienvenido a GameRanks2!</h1>
+    <p>La página número 1 de rankings de videojuegos, publishers y developers de Latinoamérica.</p>
+</div>
+
+<div>
+    <img src="/media/GameRank_Banner.jpg" alt="Banner GameRanks2" style="width: 100%; height: auto;">
+</div>
+
+<div style="margin-top: 50px; text-align: center;">
+    <a href="#sobre-creador" class="btn btn-primary">Sobre su creador</a>
+</div>
+
+<div id="sobre-creador" style="margin-top: 100px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="width: 60%;">
+        <h2>Sobre el Creador</h2>
+        <p>
+            Andrés Harwicz es un pobre estudiante que tomó la pésima decisión de armar esta página nueva en vez de copiar 
+            el código que vimos en las clases para empaquetarlo en otro formato. Durante el desarrollo de esta página, 
+            siempre fue su sueño que los profesores consideraran que estaba bien para aprobarla y liberarlo de este martirio. 
+            Y sino... otra de sus preguntas es si los profesores quieren conocer a su amigo el señor billetín 
+            <em>*guiño guiño*</em>.
+        </p>
+    </div>
+    <div style="width: 35%; text-align: center;">
+        <img src="/media/Profile_GameRanks.jpg" alt="Imagen del creador" style="width: 100%; border-radius: 15px;">
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 50px;">
+    <img src="/media/billeting.jpg" alt="Señor billetín" style="width: 50%; height: auto;">
+</div>
+{% endblock %}

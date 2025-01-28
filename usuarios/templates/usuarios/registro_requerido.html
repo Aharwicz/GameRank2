@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro Requerido{% endblock %}
+
+{% block content %}
+<h2>Registro Requerido</h2>
+<p>Necesitas registrarte para acceder a esta página.</p>
+<a href="{% url 'register' %}" class="btn btn-primary">Registrarme</a>
+<a href="{% url 'login' %}" class="btn btn-secondary">Iniciar Sesión</a>
+{% endblock %}
