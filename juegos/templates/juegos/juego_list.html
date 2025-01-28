@@ -31,8 +31,8 @@
                 {% if juego.user_score %}
                     <form method="POST" action="{% url 'rank_juego' juego.id %}">
                         {% csrf_token %}
-                        <input type="number" name="puntuacion" value="{{ juego.user_score }}" min="1" max="100" readonly>
-                        <button type="submit" class="btn btn-warning btn-sm">Editar</button>
+                        <input type="number" name="puntuacion" value="{{ juego.user_score }}" min="1" max="100">
+                        <button type="submit" class="btn btn-warning btn-sm">Actualizar</button>
                     </form>
                 {% else %}
                     <form method="POST" action="{% url 'rank_juego' juego.id %}">
