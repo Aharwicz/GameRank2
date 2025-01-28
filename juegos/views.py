@@ -23,12 +23,13 @@ def publisher_list(request):
 def juego_list(request):
     # Calcula el promedio de los puntajes para cada juego
     juegos = Juego.objects.annotate(promedio_usuarios=Avg('ranking__puntuacion'))
-    # Obtener el puntaje actual del usuario para cada juego
-    user_rankings = {ranking.juego_id: ranking.puntuacion for ranking in Ranking.objects.filter(usuario=request.user)}
+    # Obtener el puntaje actual del usuario para cada juego y añadirlo al objeto
+    for juego in juegos:
+        ranking_usuario = Ranking.objects.filter(usuario=request.user, juego=juego).first()
+        juego.user_score = ranking_usuario.puntuacion if ranking_usuario else None
 
     return render(request, 'juegos/juego_list.html', {
         'juegos': juegos,
-        'user_rankings': user_rankings,
     })
 
 # **Vista para puntuar juegos**
@@ -46,7 +47,7 @@ def rank_juego(request, pk):
                 return redirect('juego_list')
 
             # Crear o actualizar el ranking del usuario para el juego
-            ranking, created = Ranking.objects.update_or_create(
+            Ranking.objects.update_or_create(
                 usuario=request.user,
                 juego=juego,
                 defaults={'puntuacion': puntuacion}

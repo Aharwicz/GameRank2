@@ -4,9 +4,6 @@
 
 {% block content %}
 <h2>Lista de Juegos</h2>
-{% if user.is_staff %}
-<a href="{% url 'juego_add' %}" class="btn btn-success mb-3">Agregar Juego</a>
-{% endif %}
 <table class="table">
     <thead>
         <tr>
@@ -17,10 +14,7 @@
             <th>Publisher</th>
             <th>Puntaje Metacritic</th>
             <th>Puntaje Promedio</th>
-            <th>Puntuar</th>
-            {% if user.is_staff %}
-            <th>Acciones</th>
-            {% endif %}
+            <th>Tu Puntaje</th>
         </tr>
     </thead>
     <tbody>
@@ -34,18 +28,20 @@
             <td>{{ juego.puntaje_metacritic }}</td>
             <td>{{ juego.promedio_usuarios|default:"No hay puntuaciones" }}</td>
             <td>
-                <form method="post" action="{% url 'rank_juego' juego.pk %}">
-                    {% csrf_token %}
-                    <input type="number" name="puntuacion" min="1" max="10" required class="form-control mb-2">
-                    <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
-                </form>
+                {% if juego.user_score %}
+                    <form method="POST" action="{% url 'rank_juego' juego.id %}">
+                        {% csrf_token %}
+                        <input type="number" name="puntuacion" value="{{ juego.user_score }}" min="1" max="100" readonly>
+                        <button type="submit" class="btn btn-warning btn-sm">Editar</button>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{% url 'rank_juego' juego.id %}">
+                        {% csrf_token %}
+                        <input type="number" name="puntuacion" min="1" max="100" required>
+                        <button type="submit" class="btn btn-success btn-sm">Enviar</button>
+                    </form>
+                {% endif %}
             </td>
-            {% if user.is_staff %}
-            <td>
-                <a href="{% url 'juego_edit' juego.pk %}" class="btn btn-warning btn-sm">Editar</a>
-                <a href="{% url 'juego_delete' juego.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-            {% endif %}
         </tr>
         {% endfor %}
     </tbody>
