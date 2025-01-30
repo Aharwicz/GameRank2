@@ -3,6 +3,111 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-<h1>Bienvenido a GameRank2</h1>
+<h1>¡Bienvenido a GameRank2!</h1>
 <p>La plataforma para descubrir, puntuar y gestionar juegos.</p>
+
+<!-- Nueva sección: Gema Desconocida de la Semana -->
+<h2>Gema Desconocida de la Semana</h2>
+<div class="featured-game">
+    <img src="/media/Destacados/Spec-Ops-The-Line-Main.jpg" alt="Spec Ops: The Line" class="featured-image">
+</div>
+
+<!-- Sección de Rankings -->
+<h2>Ranking Comunidad de Publisher</h2>
+<table class="ranking-table">
+    <thead>
+        <tr>
+            <th>Posición</th>
+            <th>Nombre</th>
+            <th>Puntaje Promedio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for publisher in ranking_publishers %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ publisher.nombre }}</td>
+            <td>{{ publisher.promedio|floatformat:1 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Ranking Comunidad de Developers</h2>
+<table class="ranking-table">
+    <thead>
+        <tr>
+            <th>Posición</th>
+            <th>Nombre</th>
+            <th>Puntaje Promedio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for developer in ranking_developers %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ developer.nombre }}</td>
+            <td>{{ developer.promedio|floatformat:1 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Ranking Comunidad de Juegos</h2>
+<table class="ranking-table">
+    <thead>
+        <tr>
+            <th>Posición</th>
+            <th>Nombre</th>
+            <th>Puntaje Promedio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for juego in ranking_juegos %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ juego.titulo }}</td>
+            <td>{{ juego.promedio|floatformat:1 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<style>
+    .featured-game {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+
+    .featured-image {
+        width: 80%;
+        max-width: 800px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .ranking-table {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    .ranking-table th, .ranking-table td {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    .ranking-table th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .ranking-table tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+</style>
+
 {% endblock %}
