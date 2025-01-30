@@ -12,6 +12,8 @@
         <tr>
             <th>Nombre</th>
             <th>Especialidad</th>
+            <th>Puntaje Promedio</th>
+            <th>Tu Puntaje</th>
             {% if user.is_staff %}
                 <th>Acciones</th>
             {% endif %}
@@ -22,6 +24,22 @@
         <tr>
             <td>{{ developer.nombre }}</td>
             <td>{{ developer.especialidad }}</td>
+            <td>{{ developer.promedio_usuarios|default:"No hay puntuaciones" }}</td>
+            <td>
+                {% if developer.user_score %}
+                    <form method="POST" action="{% url 'rank_developer' developer.pk %}">
+                        {% csrf_token %}
+                        <input type="number" name="puntuacion" value="{{ developer.user_score }}" min="1" max="100">
+                        <button type="submit" class="btn btn-warning btn-sm">Actualizar</button>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{% url 'rank_developer' developer.pk %}">
+                        {% csrf_token %}
+                        <input type="number" name="puntuacion" min="1" max="100" required>
+                        <button type="submit" class="btn btn-success btn-sm">Enviar</button>
+                    </form>
+                {% endif %}
+            </td>
             {% if user.is_staff %}
             <td>
                 <a href="{% url 'developer_edit' developer.pk %}" class="btn btn-warning btn-sm">Editar</a>
@@ -33,3 +51,4 @@
     </tbody>
 </table>
 {% endblock %}
+

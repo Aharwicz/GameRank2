@@ -37,3 +37,24 @@ class Ranking(models.Model):
     def __str__(self):
         return f'{self.usuario.username} - {self.juego.titulo}: {self.puntuacion}'
 
+class RankingDeveloper(models.Model):
+    usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    developer = models.ForeignKey(Developer, on_delete=models.CASCADE)
+    puntuacion = models.IntegerField()
+
+    class Meta:
+        unique_together = ('usuario', 'developer')
+
+    def __str__(self):
+        return f'{self.usuario.username} - {self.developer.nombre}: {self.puntuacion}'
+
+class RankingPublisher(models.Model):
+    usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    puntuacion = models.IntegerField()
+
+    class Meta:
+        unique_together = ('usuario', 'publisher')
+
+    def __str__(self):
+        return f'{self.usuario.username} - {self.publisher.nombre}: {self.puntuacion}'

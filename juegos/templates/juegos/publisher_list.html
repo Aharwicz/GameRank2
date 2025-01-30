@@ -12,6 +12,8 @@
         <tr>
             <th>Nombre</th>
             <th>País</th>
+            <th>Puntaje Promedio</th>
+            <th>Tu Puntaje</th>
             {% if user.is_staff %}
                 <th>Acciones</th>
             {% endif %}
@@ -22,6 +24,22 @@
         <tr>
             <td>{{ publisher.nombre }}</td>
             <td>{{ publisher.pais }}</td>
+            <td>{{ publisher.promedio_usuarios|default:"No hay puntuaciones" }}</td>
+            <td>
+                {% if publisher.user_score %}
+                    <form method="POST" action="{% url 'rank_publisher' publisher.pk %}">
+                        {% csrf_token %}
+                        <input type="number" name="puntuacion" value="{{ publisher.user_score }}" min="1" max="100">
+                        <button type="submit" class="btn btn-warning btn-sm">Actualizar</button>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{% url 'rank_publisher' publisher.pk %}">
+                        {% csrf_token %}
+                        <input type="number" name="puntuacion" min="1" max="100" required>
+                        <button type="submit" class="btn btn-success btn-sm">Enviar</button>
+                    </form>
+                {% endif %}
+            </td>
             {% if user.is_staff %}
             <td>
                 <a href="{% url 'publisher_edit' publisher.pk %}" class="btn btn-warning btn-sm">Editar</a>
