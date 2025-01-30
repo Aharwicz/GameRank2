@@ -9,4 +9,10 @@
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
 </form>
+
+<!-- Enlace para cambiar la contraseña -->
+<div style="margin-top: 20px;">
+    <a href="{% url 'password_change' %}" class="btn btn-secondary">Cambiá tu contraseña</a>
+</div>
+
 {% endblock %}
