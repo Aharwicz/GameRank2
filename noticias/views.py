@@ -1,8 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from django.shortcuts import render
+from django.shortcuts import render, redirect  # Agregamos redirect
 from .models import Noticia
-from django.contrib.auth.decorators import login_required
 
 def scrape_ign():
     url = "https://latam.ign.com/article/"
@@ -40,8 +39,10 @@ def scrape_gamespot():
 
     return noticias
 
-@login_required
 def cargar_noticias(request):
+    if not request.user.is_authenticated:
+        return redirect('registro_requerido')  # Redirige a la página correcta en vez de forzar login
+
     noticias_ign = scrape_ign()
     noticias_gamespot = scrape_gamespot()
 
@@ -50,3 +51,4 @@ def cargar_noticias(request):
         Noticia.objects.get_or_create(titulo=noticia['titulo'], defaults={'contenido': noticia['enlace']})
 
     return render(request, 'noticias/lista_noticias.html', {'noticias': Noticia.objects.all()})
+
